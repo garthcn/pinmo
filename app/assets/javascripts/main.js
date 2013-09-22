@@ -95,12 +95,46 @@ function initMap() {
       setMarkers(map, JSON.parse(localStorage['places']));
     }
 
+    setPath(map);
     $('body').on('click', 'a.close-carousel', function() {
       closeSlider();
       return false;
     });
   }
   google.maps.event.addDomListener(window, 'load', initialize);
+}
+
+function setPath(map) {
+  var pathPoints = [
+    new google.maps.LatLng(37.411832, -122.071452),
+    new google.maps.LatLng(37.41045, -122.05975),
+    new google.maps.LatLng(37.422, -122.084),
+    new google.maps.LatLng(37.414371, -122.076817)
+  ];
+  var travelPath = new google.maps.Polyline({
+    path: pathPoints,
+    strokeColor: '#333333',
+    strokeOpacity: 0.8,
+    strokeWeight: 3
+  });
+
+  travelPath.setMap(map);
+
+  //var lineSymbol = {
+    //path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+  //};
+
+  //var line = new google.maps.Polyline({
+    ////strokeColor: '#333333',
+    ////strokeOpacity: 0.8,
+    ////strokeWeight: 2
+    //path: pathPoints,
+    //icons: [{
+      //icon: lineSymbol,
+      //offset: '100%'
+    //}],
+    //map: map
+  //});
 }
 
 function setMarkers(map, locations) {
@@ -115,19 +149,25 @@ function setMarkers(map, locations) {
   // the Y direction down.
   var image = [
   {
-    url: '/assets/redPin.png',
+    url: '/assets/MS.png',
     size: new google.maps.Size(70, 60),
     origin: new google.maps.Point(0,0),
     anchor: new google.maps.Point(0, 60)
   }, 
   {
-    url: '/assets/orangePin.png',
+    url: '/assets/CMU.png',
     size: new google.maps.Size(70, 60),
     origin: new google.maps.Point(0,0),
     anchor: new google.maps.Point(0, 60)
   }, 
   {
-    url: '/assets/yellowPin.png',
+    url: '/assets/museum.png',
+    size: new google.maps.Size(70, 60),
+    origin: new google.maps.Point(0,0),
+    anchor: new google.maps.Point(0, 60)
+  }, 
+  {
+    url: '/assets/google.png',
     size: new google.maps.Size(70, 60),
     origin: new google.maps.Point(0,0),
     anchor: new google.maps.Point(0, 60)
@@ -170,14 +210,15 @@ function setMarkers(map, locations) {
         labelAnchor: new google.maps.Point(-75, 35),
         labelClass: "marker-labels", // the CSS class for the label
         labelStyle: {opacity: 0.7},
-        url: place[4]
+        key: place[4]
     });
 
     (function() {
       var m = markerLabel;
       google.maps.event.addListener(m, 'click', function(evt) {
         map.panTo(m.getPosition());
-        var url = m.url;
+        var url = '/carousel_html?key=' + m.key;
+        $('#carousel-container .title').html(m.labelContent);
         clickFlagHandler(url);
       });
     })();
@@ -243,7 +284,7 @@ function loadImages(url) {
     url: url,
     async: true
   }).done(function(data) {
-    $('#carousel-container').html(data);
+    $('#carousel-content').html(data);
     initSlider();
   });
   console.log('load img');
@@ -268,11 +309,13 @@ function initFP() {
 
 function onFPChange(evt) {
   console.log(evt);
+  var s;
   $.each(evt.fpfiles, function(k, v) {
-
+    s += "'" + v.url + "',";
   });
   // TODO: Store pic urls in localStorage
   // Prepare pic in slider before upload
+  
   
   processTrip();
 }
@@ -307,6 +350,38 @@ function processTrip() {
     localStorage['places'] = JSON.stringify(places2);
     window.location = '/mytrips';
   }, 3000);
+}
+
+function getGeo(lat, lng) {
+  var latLng = new google.maps.LatLng(lat, lng);
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode({'latLng': latLng}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      if (results[1]) {
+        console.log(results[1].formatted_address);
+      } else {
+        alert('No results found');
+      }
+    } else {
+      alert('Geocoder failed due to: ' + status);
+    }
+  });
+}
+
+function getXola() {
+  $.ajax({
+    url: 'https://dev.xola.com/api/experiences',
+    dataType: 'jsonp',
+  }).done(function(data) {
+    $.each(data.data, function(k, v) {
+      console.log(v.geo);
+    });
+  });
+}
+
+function goToTrips() {
+  window.location = '/mytrips';
+  return false;
 }
 
 $(document).ready(function() {

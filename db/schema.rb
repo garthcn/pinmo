@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130922083938) do
+ActiveRecord::Schema.define(version: 20130922132834) do
+
+  create_table "photos", force: true do |t|
+    t.string   "url"
+    t.string   "key"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "places", force: true do |t|
     t.string   "name"
