@@ -1,0 +1,180 @@
+body {
+  font-family: helvetica, arial;
+
+  .navbar.mynav {
+
+    .navbar-inner {
+      padding: 0 35px;
+      height: 57px;
+
+      ul.nav {
+        margin: 0 0 10px 25px;
+        height: 100%;
+        li {
+          margin: 0 10px;
+          height: 100%;
+          border-left: 15px solid transparent;
+
+          a {
+            padding-right: 20px;
+            padding-left: 35px;
+            padding-top: 19px;
+            font-size: 20px;
+            font-weight: lighter;
+          }
+        }
+        li.active {
+          a {
+            color: white;
+            box-shadow: none;
+            text-shadow: none;
+          }
+        }
+        li.explore {
+          background: url('/assets/explore_grey.png') no-repeat left center;
+          background-size: 25px 15px;
+        }
+        li.my-trips {
+          background: url('/assets/myTrips_grey.png') no-repeat left center;
+          background-size: 20px 20px;
+        }
+        li.hiw {
+          background: url('/assets/howItWorks_grey.png') no-repeat left center;
+          background-size: 20px 20px;
+        }
+        li.explore.active {
+          background: #494949 url('/assets/explore_white.png') no-repeat left center;
+          background-size: 25px 15px;
+        }
+        li.my-trips.active {
+          background: #494949 url('/assets/myTrips_white.png') no-repeat left center;
+          background-size: 20px 20px;
+        }
+        li.hiw.active {
+          background: #494949 url('/assets/howItWorks_white.png') no-repeat left center;
+          background-size: 20px 20px;
+        }
+      }
+    }
+    a.brand img {
+      height: 40px;
+    }
+  }
+  #main {
+    margin-top: 55px;
+    height: 100%;
+
+  }
+}
+
+div.marker-labels {
+  font-size: 160%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+  font-weight: lighter;
+}
+
+#upload-btn {
+  position: absolute;
+  top: 100px;
+  right: 68px;
+  button.upload-btn
+  {
+    font-weight: lighter;
+    border: none;
+    background: #c83f3f;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+}
+
+#hero {
+  height: 500px;
+  position: absolute;
+  bottom: 260px;
+  width: 100%;
+  display: block;
+  background-color:rgba(0, 0, 0, 0.7);
+  background: url(data:;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAABl0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuNUmK/OAAAAATSURBVBhXY2RgYNgHxGAAYuwDAA78AjwwRoQYAAAAAElFTkSuQmCC) repeat scroll transparent\9; /* ie fallback png background image */
+  //z-index:9999;
+  color:white;
+
+  a.close.close-hero {
+    float: right;
+    margin: 8px 8px 0 0;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    color: #ffffff;
+    //text-shadow: 0 1px 0 #ffffff;
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  div.photo-container {
+    max-height: 500px;
+    max-width: 800px;
+    margin: 0 auto;
+    img.photo {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      max-height: 430px;
+    }
+  }
+}
+
+#carousel-container {
+  height: 260px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 2;
+  display: block;
+  background-color:rgba(0, 0, 0, 0.7);
+  background: url(data:;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAABl0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuNUmK/OAAAAATSURBVBhXY2RgYNgHxGAAYuwDAA78AjwwRoQYAAAAAElFTkSuQmCC) repeat scroll transparent\9; /* ie fallback png background image */
+  //z-index:9999;
+  color:white;
+
+  li.thumb {
+    cursor: pointer;
+  }
+
+  a.close-carousel {
+    float: right;
+    margin: 8px 8px 0 0;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    color: #ffffff;
+    //text-shadow: 0 1px 0 #ffffff;
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  .bx-wrapper .bx-viewport {
+    border: none;
+    background: none;
+    box-shadow: none;
+  }
+  
+  .carousel {
+    //padding-top: 10px;
+  }
+  .title {
+    font-weight: lighter;
+    font-size: 20px;
+    padding-left: 47px;
+    padding-top: 10px;
+  }
+}
+
+#map-canvas {
+  //height: 450px;
+}
