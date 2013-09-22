@@ -9,4 +9,15 @@ class PagesController < ApplicationController
   def upload
 
   end
+  
+  def ms
+    render :layout => false
+  end
+  def cmu
+    render :layout => false
+  end
+  def chm
+    render :layout => false
+  end
+  
 end

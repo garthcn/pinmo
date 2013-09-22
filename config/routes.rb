@@ -5,6 +5,10 @@ Pinmo::Application.routes.draw do
   get '/text_off' => 'pages#text_off'
   get '/carousel_html' => 'pages#carousel_html'
   get '/upload' => 'pages#upload'
+  get '/mytrips' => 'pages#mytrips'
+  get '/ms' => 'pages#ms'
+  get '/cmu' => 'pages#cmu'
+  get '/chm' => 'pages#chm'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

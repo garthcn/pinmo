@@ -7,7 +7,7 @@ function initMap() {
   var MY_MAPTYPE_ID = 'custom_style';
 
   // Bind thumb click event
-  $("body").on("click", "li.thumb", function(evt) {
+  $("body").on("click", "li img", function(evt) {
     console.log('click thumb');
     clickImageHandler(evt.target);
   });
@@ -60,11 +60,13 @@ function initMap() {
       }
     ];
 
+    var sf = new google.maps.LatLng(37.782, -122.44);
+    var mv = new google.maps.LatLng(37.411371, -122.066817);
     var mapOptions = {
-      //zoom: 12,
-      //center: halfDome,
-      zoom: 10,
-      center: new google.maps.LatLng(-33.890542, 151.274856),
+      center: mv,
+      zoom: 15,
+      //zoom: 10,
+      //center: new google.maps.LatLng(-33.890542, 151.274856),
       mapTypeControlOptions: {
         mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID]
       },
@@ -86,16 +88,14 @@ function initMap() {
 
     map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
 
-    var places = [
-      ['Bondi Beach', -33.890542, 151.274856, 4],
-      ['Coogee Beach', -33.923036, 151.259052, 5],
-      ['Cronulla Beach', -34.028249, 151.157507, 3],
-      ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-      ['Maroubra Beach', -33.950198, 151.259302, 1]
-    ];
-    setMarkers(map, places);
+    // Set markers for different pages
+    if (window.location.pathname.indexOf('text_off') != -1) {
+      setMarkers(map, places1);
+    } else {
+      setMarkers(map, JSON.parse(localStorage['places']));
+    }
 
-    $('a.close-carousel').click(function() {
+    $('body').on('click', 'a.close-carousel', function() {
       closeSlider();
       return false;
     });
@@ -113,12 +113,25 @@ function setMarkers(map, locations) {
   // Origins, anchor positions and coordinates of the marker
   // increase in the X direction to the right and in
   // the Y direction down.
-  var image = {
-    url: '/assets/pins_70.png',
+  var image = [
+  {
+    url: '/assets/redPin.png',
     size: new google.maps.Size(70, 60),
     origin: new google.maps.Point(0,0),
     anchor: new google.maps.Point(0, 60)
-  };
+  }, 
+  {
+    url: '/assets/orangePin.png',
+    size: new google.maps.Size(70, 60),
+    origin: new google.maps.Point(0,0),
+    anchor: new google.maps.Point(0, 60)
+  }, 
+  {
+    url: '/assets/yellowPin.png',
+    size: new google.maps.Size(70, 60),
+    origin: new google.maps.Point(0,0),
+    anchor: new google.maps.Point(0, 60)
+  }];
 
   var shadow = {
     url: '/assets/shadow-pins_70.png',
@@ -150,37 +163,38 @@ function setMarkers(map, locations) {
         position: myLatLng,
         draggable: false,
         raiseOnDrag: false,
-        icon: image,
+        icon: image[i],
         //shadow: shadow,
         map: map,
         labelContent: place[0],
-        labelAnchor: new google.maps.Point(-75, 33),
+        labelAnchor: new google.maps.Point(-75, 35),
         labelClass: "marker-labels", // the CSS class for the label
-        labelStyle: {opacity: 0.7}
+        labelStyle: {opacity: 0.7},
+        url: place[4]
     });
 
     (function() {
       var m = markerLabel;
       google.maps.event.addListener(m, 'click', function(evt) {
         map.panTo(m.getPosition());
-        clickFlagHandler();
+        var url = m.url;
+        clickFlagHandler(url);
       });
     })();
   }
 }
 
-function clickFlagHandler() {
+function clickFlagHandler(imgUrl) {
   if ($('#carousel-container').is(':visible')) {
-    loadImages();
+    loadImages(imgUrl);
     // Refresh carousel
     console.log("refresh carousel");
     // Init carousel
     initSlider();
   } else {
-    loadImages();
+    loadImages(imgUrl);
     // Open carousel
-    $("#carousel-container").slideToggle(function() {
-    });
+    $("#carousel-container").slideToggle();
     // Init carousel
     initSlider();
   }
@@ -200,10 +214,18 @@ function closeSlider() {
 
 function clickImageHandler(target) {
   console.log(target);
+  var img = $(target);
+  var url = img.attr('src');
+  console.log(url);
   if ($('#hero').is(':visible')) {
     // just load img
+    $('.photo-container img').fadeOut(function() {
+      $('.photo-container img').attr('src', url);
+      $('.photo-container img').fadeIn();
+    });
   } else {
     // load img
+    $('.photo-container img').attr('src', url);
     $("#hero").slideToggle(function() {
     });
   }
@@ -215,13 +237,13 @@ function closeHero() {
   });
 }
 
-function loadImages() {
+function loadImages(url) {
   // Place images
-  var url = '/carousel_html';
   $.ajax({
-    url: url
+    url: url,
+    async: true
   }).done(function(data) {
-    $('#carousel-content').html(data);
+    $('#carousel-container').html(data);
     initSlider();
   });
   console.log('load img');
@@ -229,10 +251,10 @@ function loadImages() {
 
 function initSlider() {
   $('.bxslider').bxSlider({
-    minSlides: 3,
-    maxSlides: 7,
-    slideWidth: 170,
-    slideMargin: 15
+    minSlides: 1,
+    maxSlides: 10,
+    slideWidth: 200,
+    slideMargin: 1,
   });
 }
 
@@ -249,9 +271,46 @@ function onFPChange(evt) {
   $.each(evt.fpfiles, function(k, v) {
 
   });
+  // TODO: Store pic urls in localStorage
+  // Prepare pic in slider before upload
+  
+  processTrip();
+}
+
+function processTrip() {
+  var h = window.innerHeight - 55;
+  $('#overlay').css("height", h);
+  $('#overlay').fadeIn(function() {
+    $('#loading').show();
+    var opts = {
+      lines: 13, // The number of lines to draw
+      length: 20, // The length of each line
+      width: 10, // The line thickness
+      radius: 30, // The radius of the inner circle
+      corners: 1, // Corner roundness (0..1)
+      rotate: 0, // The rotation offset
+      direction: 1, // 1: clockwise, -1: counterclockwise
+      color: '#000', // #rgb or #rrggbb or array of colors
+      speed: 1, // Rounds per second
+      trail: 60, // Afterglow percentage
+      shadow: false, // Whether to render a shadow
+      hwaccel: false, // Whether to use hardware acceleration
+      className: 'spinner', // The CSS class to assign to the spinner
+      zIndex: 100, // The z-index (defaults to 2000000000)
+      //top: 'auto', // Top position relative to parent in px
+      //left: 'auto' // Left position relative to parent in px
+    };
+    var target = document.getElementById('loading');
+    var spinner = new Spinner(opts).spin(target);   
+  });
+  setTimeout(function() {
+    localStorage['places'] = JSON.stringify(places2);
+    window.location = '/mytrips';
+  }, 3000);
 }
 
 $(document).ready(function() {
+  jQuery.easing.def = "easeOutCubic";
   if (window.location.pathname.indexOf('upload') != -1) {
     initFP();
   } else {

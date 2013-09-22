@@ -1,6 +1,10 @@
 body {
   font-family: helvetica, arial;
 
+  span#list-btn {
+    cursor: pointer;
+  }
+
   .navbar.mynav {
 
     .navbar-inner {
@@ -72,8 +76,9 @@ div.marker-labels {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 150px;
-  font-weight: lighter;
+  max-width: 180px;
+  font-weight: bold;
+  color: black;
 }
 
 #upload-btn {
@@ -89,6 +94,24 @@ div.marker-labels {
     font-size: 18px;
     padding: 10px 20px;
     cursor: pointer;
+  }
+}
+
+#overlay {
+  height: 600px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: block;
+  background-color:rgba(0, 0, 0, 0.7);
+  background: url(data:;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAABl0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuNUmK/OAAAAATSURBVBhXY2RgYNgHxGAAYuwDAA78AjwwRoQYAAAAAElFTkSuQmCC) repeat scroll transparent\9; /* ie fallback png background image */
+  //z-index:9999;
+  color:white;
+
+  #loading {
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
   }
 }
 
@@ -108,11 +131,11 @@ div.marker-labels {
     margin: 8px 8px 0 0;
     text-decoration: none;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: lighter;
     line-height: 20px;
-    color: #ffffff;
+    color: white;
     //text-shadow: 0 1px 0 #ffffff;
-    opacity: 0.7;
+    opacity: 0.6;
     cursor: pointer;
   }
 
@@ -143,6 +166,17 @@ div.marker-labels {
 
   li.thumb {
     cursor: pointer;
+    .crop {
+      width: 200px;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .crop img {
+      max-width: 400px;
+      max-height: 300px;
+      margin: -75px 0 0 -100px;
+    }
   }
 
   a.close-carousel {
@@ -150,11 +184,11 @@ div.marker-labels {
     margin: 8px 8px 0 0;
     text-decoration: none;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: lighter;
     line-height: 20px;
-    color: #ffffff;
+    color: white;
     //text-shadow: 0 1px 0 #ffffff;
-    opacity: 0.7;
+    opacity: 0.6;
     cursor: pointer;
   }
 
