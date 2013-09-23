@@ -5,24 +5,35 @@ body {
     background: rgba(255, 255, 255, 0.6);
   }
 
+  li.hiw {
+    width: 175px;
+  }
   .masthead {
     width: 100%;
     height: 800px;
     background: url('/assets/masthead.jpg') no-repeat 0 0;
     background-size: 1440px 960px;
     overflow: hidden;
+    .words {
+      width: 100%;
+      height: 300px;
+      background: url('/assets/tagline.png') no-repeat right 0;
+      //background-size: 600px 352px;
+      overflow: hidden;
+      position: absolute;
+      top: 346px;
+      right: 100px;
+    }
   }
 
-  .words {
+  .hiw {
     width: 100%;
-    height: 300px;
-    background: url('/assets/tagline.png') no-repeat right 0;
-    //background-size: 600px 352px;
+    height: 1400px;
+    background: url('/assets/HowitWorks.png') no-repeat center 0;
+    background-size: 1000px auto;
     overflow: hidden;
-    position: absolute;
-    bottom: 145px;
-    right: 100px;
   }
+
 
 
   span#list-btn {

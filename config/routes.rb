@@ -10,6 +10,7 @@ Pinmo::Application.routes.draw do
   get '/cmu' => 'pages#cmu'
   get '/chm' => 'pages#chm'
   get '/' => 'pages#home'
+  get 'howitworks' => 'pages#hiw'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

@@ -4,6 +4,9 @@ class PagesController < ApplicationController
 
   def text_off
   end
+   
+  def hiw
+  end
 
   def carousel_html
     key = params[:key].to_s
