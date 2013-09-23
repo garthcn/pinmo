@@ -92,9 +92,7 @@ function initMap() {
     if (window.location.pathname.indexOf('text_off') != -1) {
       setMarkers(map, places1);
     } else {
-      if(localStorage['places']) {
-        setMarkers(map, JSON.parse(localStorage['places']));
-      }
+      setMarkers(map, places2);
     }
 
     setPath(map);
@@ -1244,7 +1242,6 @@ function processTrip() {
     var spinner = new Spinner(opts).spin(target);   
   });
   setTimeout(function() {
-    localStorage['places'] = JSON.stringify(places2);
     window.location = '/mytrips';
   }, 3000);
 }
