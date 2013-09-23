@@ -9,7 +9,7 @@ gem 'populator'
 gem 'pg'
 # Use sqlite3 as the database for Active Record
 group :dev do
-  gem 'sqlite3'
+  #gem 'sqlite3'
 end
 
 # Use SCSS for stylesheets
